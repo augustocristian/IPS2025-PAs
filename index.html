@@ -2,62 +2,222 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>IPS Example</title>
+  <title>PaquExpress - Envíos rápidos</title>
   <style>
     body {
+      margin: 0;
       font-family: Arial, sans-serif;
+      background: #f5f6fa;
+      color: #333;
+    }
+
+    /* --- Navbar --- */
+    header {
+      background: #003366;
+      color: white;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header .logo {
+      font-size: 1.5em;
+      font-weight: bold;
+      color: #ffcc00;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    nav ul li a:hover {
+      color: #ffcc00;
+    }
+
+    /* --- Idioma --- */
+    .lang-selector {
+      margin-left: 20px;
+      background: white;
+      color: #003366;
+      border: none;
+      padding: 5px;
+      border-radius: 4px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    /* --- Contenido principal --- */
+    main {
       padding: 20px;
+      max-width: 800px;
+      margin: auto;
     }
-    .hidden {
-      display: none;
+
+    h1 {
+      color: #003366;
     }
+
+    /* --- Formulario --- */
     form {
-      max-width: 400px;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      margin-top: 20px;
+      position: relative;
     }
+
     label {
       display: block;
       margin: 10px 0 5px;
+      font-weight: bold;
     }
+
     input {
       width: 100%;
-      padding: 8px;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
       font-size: 14px;
+    }
+
+    input.resaltado {
+      border: 2px solid #003366;
+      background: #eef6ff;
+    }
+
+    /* --- Botones --- */
+    .botones {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .botones button {
+      background: #003366;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 4px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .botones button:hover {
+      background: #ffcc00;
+      color: #003366;
+    }
+
+    /* --- Responsive --- */
+    @media (max-width: 600px) {
+      nav ul {
+        flex-direction: column;
+        gap: 10px;
+      }
+      .botones {
+        flex-direction: column;
+        align-items: stretch;
+      }
     }
   </style>
 </head>
 <body>
-  <h1>Formulario interactivo</h1>
-  <p id="contador"></p>
+  <!-- Navbar -->
+  <header>
+    <div class="logo" id="logo">PaquExpress</div>
+    <nav>
+      <ul>
+        <li><a href="#" id="menu-inicio">Inicio</a></li>
+        <li><a href="#" id="menu-envios">Envíos</a></li>
+        <li><a href="#" id="menu-seguimiento">Seguimiento</a></li>
+        <li><a href="#" id="menu-tarifas">Tarifas</a></li>
+        <li><a href="#" id="menu-contacto">Contacto</a></li>
+      </ul>
+    </nav>
+    <select id="lang" class="lang-selector">
+      <option value="es">ES</option>
+      <option value="en">EN</option>
+    </select>
+  </header>
 
-  <form id="formulario">
-    <div id="campo-nombre">
-      <label for="nombre">Name:</label>
-      <input type="text" id="nombre">
-    </div>
-    <div id="campo-apellidos">
-      <label for="apellidos">Surnames:</label>
-      <input type="text" id="apellidos">
-    </div>
-    <div id="campo-email">
-      <label for="email">Mail:</label>
-      <input type="email" id="email">
-    </div>
-    <div id="campo-telefono">
-      <label for="telefono">Phone:</label>
-      <input type="tel" id="telefono">
-    </div>
-    <div id="campo-direccion">
-      <label for="direccion">Address:</label>
-      <input type="text" id="direccion">
-    </div>
-    <div id="campo-ciudad">
-      <label for="ciudad">City:</label>
-      <input type="text" id="ciudad">
-    </div>
-  </form>
+  <!-- Contenido principal -->
+  <main>
+    <h1 id="titulo-form">Formulario de envío</h1>
+
+    <form id="formulario">
+      <div>
+        <label for="nombre" id="label-nombre">Nombre:</label>
+        <input type="text" id="nombre">
+      </div>
+      <div>
+        <label for="apellidos" id="label-apellidos">Apellidos:</label>
+        <input type="text" id="apellidos">
+      </div>
+      <div>
+        <label for="email" id="label-email">Email:</label>
+        <input type="email" id="email">
+      </div>
+      <div>
+        <label for="telefono" id="label-telefono">Teléfono:</label>
+        <input type="tel" id="telefono">
+      </div>
+      <div>
+        <label for="direccion" id="label-direccion">Dirección:</label>
+        <input type="text" id="direccion">
+      </div>
+      <div>
+        <label for="ciudad" id="label-ciudad">Ciudad:</label>
+        <input type="text" id="ciudad">
+      </div>
+
+      <div class="botones">
+        <button type="button" id="btn-add">Añadir paquete</button>
+        <button type="submit" id="btn-send">Enviar</button>
+      </div>
+    </form>
+  </main>
 
   <script>
-    // --- Contador de visitas ---
+    // --- Traducciones ---
+    const traducciones = {
+      es: {
+        menu: ["Inicio", "Envíos", "Seguimiento", "Tarifas", "Contacto"],
+        titulo: "Formulario de envío",
+        labels: ["Nombre:", "Apellidos:", "Email:", "Teléfono:", "Dirección:", "Ciudad:"],
+        botones: ["Añadir paquete", "Enviar"],
+      },
+      en: {
+        menu: ["Home", "Shipments", "Tracking", "Rates", "Contact"],
+        titulo: "Shipping Form",
+        labels: ["First Name:", "Last Name:", "Email:", "Phone:", "Address:", "City:"],
+        botones: ["Add package", "Send"],
+      }
+    };
+
+    // --- Campos del formulario ---
+    const campos = [
+      { id: "nombre" },
+      { id: "apellidos" },
+      { id: "email" },
+      { id: "telefono" },
+      { id: "direccion" },
+      { id: "ciudad" },
+    ];
+
+    // --- Control dinámico según visitas ---
     let visitas = localStorage.getItem("visitas");
     if (!visitas) {
       visitas = 1;
@@ -66,41 +226,54 @@
     }
     localStorage.setItem("visitas", visitas);
 
-    document.getElementById("contador").textContent = 
-      "Eres el visitante número " + visitas;
-
-    // --- Campos del formulario ---
-    const campos = [
-      { id: "nombre", div: document.getElementById("campo-nombre") },
-      { id: "apellidos", div: document.getElementById("campo-apellidos") },
-      { id: "email", div: document.getElementById("campo-email") },
-      { id: "telefono", div: document.getElementById("campo-telefono") },
-      { id: "direccion", div: document.getElementById("campo-direccion") },
-      { id: "ciudad", div: document.getElementById("campo-ciudad") },
-    ];
-
-    // --- Determinar campo que manda según número de visitas ---
     const indiceControl = (visitas - 1) % campos.length;
     const campoControl = campos[indiceControl];
-
-    // --- Añadir la lógica de ocultar/mostrar ---
     const inputControl = document.getElementById(campoControl.id);
+
+    inputControl.classList.add("resaltado");
 
     inputControl.addEventListener("input", () => {
       if (inputControl.value.trim() !== "") {
-        // Ocultar y borrar todos los demás
         campos.forEach((campo, idx) => {
           if (idx !== indiceControl) {
-            campo.div.classList.add("hidden");
             document.getElementById(campo.id).value = "";
           }
         });
-      } else {
-        // Mostrar todos de nuevo
-        campos.forEach((campo) => {
-          campo.div.classList.remove("hidden");
-        });
       }
+    });
+
+    // --- Cambiar idioma ---
+    const selector = document.getElementById("lang");
+
+    function aplicarIdioma(idioma) {
+      const t = traducciones[idioma];
+      document.getElementById("menu-inicio").textContent = t.menu[0];
+      document.getElementById("menu-envios").textContent = t.menu[1];
+      document.getElementById("menu-seguimiento").textContent = t.menu[2];
+      document.getElementById("menu-tarifas").textContent = t.menu[3];
+      document.getElementById("menu-contacto").textContent = t.menu[4];
+      document.getElementById("titulo-form").textContent = t.titulo;
+
+      document.getElementById("label-nombre").textContent = t.labels[0];
+      document.getElementById("label-apellidos").textContent = t.labels[1];
+      document.getElementById("label-email").textContent = t.labels[2];
+      document.getElementById("label-telefono").textContent = t.labels[3];
+      document.getElementById("label-direccion").textContent = t.labels[4];
+      document.getElementById("label-ciudad").textContent = t.labels[5];
+
+      document.getElementById("btn-add").textContent = t.botones[0];
+      document.getElementById("btn-send").textContent = t.botones[1];
+    }
+
+    // Guardar idioma en localStorage
+    let idiomaGuardado = localStorage.getItem("idioma") || "es";
+    selector.value = idiomaGuardado;
+    aplicarIdioma(idiomaGuardado);
+
+    selector.addEventListener("change", () => {
+      const nuevoIdioma = selector.value;
+      localStorage.setItem("idioma", nuevoIdioma);
+      aplicarIdioma(nuevoIdioma);
     });
   </script>
 </body>
