@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>IPS Example</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    .hidden {
+      display: none;
+    }
+    form {
+      max-width: 400px;
+    }
+    label {
+      display: block;
+      margin: 10px 0 5px;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Formulario interactivo</h1>
+  <p id="contador"></p>
+
+  <form id="formulario">
+    <div id="campo-nombre">
+      <label for="nombre">Name:</label>
+      <input type="text" id="nombre">
+    </div>
+    <div id="campo-apellidos">
+      <label for="apellidos">Surnames:</label>
+      <input type="text" id="apellidos">
+    </div>
+    <div id="campo-email">
+      <label for="email">Mail:</label>
+      <input type="email" id="email">
+    </div>
+    <div id="campo-telefono">
+      <label for="telefono">Phone:</label>
+      <input type="tel" id="telefono">
+    </div>
+    <div id="campo-direccion">
+      <label for="direccion">Address:</label>
+      <input type="text" id="direccion">
+    </div>
+    <div id="campo-ciudad">
+      <label for="ciudad">City:</label>
+      <input type="text" id="ciudad">
+    </div>
+  </form>
+
+  <script>
+    // --- Contador de visitas ---
+    let visitas = localStorage.getItem("visitas");
+    if (!visitas) {
+      visitas = 1;
+    } else {
+      visitas = parseInt(visitas) + 1;
+    }
+    localStorage.setItem("visitas", visitas);
+
+    document.getElementById("contador").textContent = 
+      "Eres el visitante número " + visitas;
+
+    // --- Campos del formulario ---
+    const campos = [
+      { id: "nombre", div: document.getElementById("campo-nombre") },
+      { id: "apellidos", div: document.getElementById("campo-apellidos") },
+      { id: "email", div: document.getElementById("campo-email") },
+      { id: "telefono", div: document.getElementById("campo-telefono") },
+      { id: "direccion", div: document.getElementById("campo-direccion") },
+      { id: "ciudad", div: document.getElementById("campo-ciudad") },
+    ];
+
+    // --- Determinar campo que manda según número de visitas ---
+    const indiceControl = (visitas - 1) % campos.length;
+    const campoControl = campos[indiceControl];
+
+    // --- Añadir la lógica de ocultar/mostrar ---
+    const inputControl = document.getElementById(campoControl.id);
+
+    inputControl.addEventListener("input", () => {
+      if (inputControl.value.trim() !== "") {
+        // Ocultar y borrar todos los demás
+        campos.forEach((campo, idx) => {
+          if (idx !== indiceControl) {
+            campo.div.classList.add("hidden");
+            document.getElementById(campo.id).value = "";
+          }
+        });
+      } else {
+        // Mostrar todos de nuevo
+        campos.forEach((campo) => {
+          campo.div.classList.remove("hidden");
+        });
+      }
+    });
+  </script>
+</body>
+</html>
